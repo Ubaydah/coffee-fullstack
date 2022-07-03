@@ -328,7 +328,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"latte-milo\",\n    \"recipe\": [\n                {\n                    \"color\": \"brown\",\n                    \"name\": \"latte-milk\",\n                    \"parts\": 1\n                }\n            ]\n}",
+							"raw": "{\n    \"title\": \"latte-mio\",\n    \"recipe\": [\n                {\n                    \"color\": \"brown\",\n                    \"name\": \"latte-milk\",\n                    \"parts\": 1\n                }\n            ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -35,7 +35,6 @@ def get_drinks():
 @app.route('/drinks-detail', methods=['GET'])
 @requires_auth('get:drinks-detail')
 def get_drinks_detail(jwt):
-    print(jwt)
     drinks = Drink.query.all()
     response = [drink.long() for drink in drinks]
 
@@ -61,6 +60,27 @@ def create_drinks(jwt):
     
     except Exception as e:
         abort(422)
+
+@app.route('/drinks/<int:id>', methods=['PATCH'])
+@requires_auth('patch:drinks')
+def update_drink(jwt, id):
+    drink = Drink.query.get(id)
+    if drink is None:
+        abort(404)
+    body = request.get_json()
+
+    if 'title' in body:
+        drink.title = body['title']
+    
+    if 'recipe' in body:
+        drink.recipe = json.dumps(body['recipe'])
+    
+    drink.update()
+
+    return jsonify({
+        "success": True,
+        "drinks": [drink.long()]
+    })
 
 @app.route('/drinks/<int:id>', methods=['DELETE'])
 @requires_auth('delete:drinks')
