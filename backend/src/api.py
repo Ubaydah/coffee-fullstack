@@ -13,6 +13,18 @@ CORS(app)
 
 db_drop_and_create_all()
 
+@app.after_request
+def after_request(response):
+    response.headers.add(
+        "Access-Control-Allow-Headers",
+        "Content-Type,Authorization,true"
+    )
+    response.headers.add(
+        "Access-Control-Allow-Methods",
+        "GET, PUT, POST, DELETE, OPTIONS"
+    )
+    return response
+
 @app.route('/')
 def welcome():
     return jsonify({
@@ -86,10 +98,13 @@ def update_drink(jwt, id):
 @requires_auth('delete:drinks')
 def delete_drink(jwt, id):
     drink = Drink.query.get(id)
-    id = drink.id
+
     if drink is None:
         abort(404)
-    drink.delete()
+    try:
+        drink.delete()
+    except Exception as e:
+        abort(422)
 
     return jsonify({
         "success": True,

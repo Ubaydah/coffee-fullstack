@@ -60,7 +60,7 @@ def check_permissions(permission, payload):
         raise AuthError({
             'code': 'unauthorized',
             'description': 'Permission not found.'
-        }, 401)
+        }, 403)
     return True
 
 def verify_decode_jwt(token):
